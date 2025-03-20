@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $salary = floatval($_POST['salary']);
 
     if (empty($first_name) || empty($last_name) || empty($department) || empty($salary)) {
-        echo "<script>alert('Error: All fields are required!'); window.history.back();</script>";
+        echo "<script>alert('Error: All fields are required!'); history.back();</script>";
         exit();
     }
 
@@ -17,13 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $conn->query($check_sql);
 
     if ($result->num_rows > 0) {
-        echo "<script>alert('Error: Employee with the same details already exists.'); window.location.href='add_employee.php';</script>";
+        echo "<script>alert('Error: Employee with the same details already exists.'); location.href='add_employee.php';</script>";
         exit();
     } else {
         $insert_sql = "INSERT INTO employee (first_name, last_name, department, salary) VALUES ('$first_name', '$last_name', '$department', '$salary')";
 
         if ($conn->query($insert_sql)) {
-            echo "<script>alert('Employee added successfully!'); window.location.href='index.php';</script>";
+            echo "<script>alert('Employee added successfully!'); location.href='index.php';</script>";
             exit();
         } else {
             echo "<script>alert('Error: Unable to add employee.');</script>";

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $employee = $result->fetch_assoc();
 
     if (!$employee) {
-        echo "<script>alert('Error: Employee not found.'); window.location.href='index.php';</script>";
+        echo "<script>alert('Error: Employee not found.'); location.href='index.php';</script>";
         exit();
     }
 }   elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $check_result = $conn->query($check_sql);
 
     if ($check_result->num_rows > 0) {
-        echo "<script>alert('Error: Employee with the same details already exists.'); window.location.href='edit_employee.php?id=$id';</script>";
+        echo "<script>alert('Error: Employee with the same details already exists.'); location.href='edit_employee.php?id=$id';</script>";
         exit();
     } else {
         
@@ -36,14 +36,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                         WHERE id=$id";
 
         if ($conn->query($update_sql)) {
-            echo "<script>alert('Employee updated successfully!'); window.location.href='index.php';</script>";
+            echo "<script>alert('Employee updated successfully!'); location.href='index.php';</script>";
             exit();
         } else {
             echo "Error updating record: " . $conn->error;
         }
     }
 } else {
-    echo "<script>alert('No employee ID provided.'); window.location.href='index.php';</script>";
+    echo "<script>alert('No employee ID provided.'); location.href='index.php';</script>";
     exit();
 }
 ?>

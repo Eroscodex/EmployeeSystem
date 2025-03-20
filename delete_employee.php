@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         $conn->query($reset_sql2);
         $conn->query($reset_sql3);
 
-        echo "<script>alert('Employee Deleted!'); window.location.href='index.php';</script>";
+        echo "<script>alert('Employee Deleted!'); location.href='index.php';</script>";
     } else {
         echo "<script>alert('Error Deleting Employee!');</script>";
     }
