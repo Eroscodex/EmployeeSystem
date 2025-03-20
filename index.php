@@ -61,7 +61,8 @@ if (!$result) {
     </table>
     <br><br>
     <a href="add_employee.php" onclick="showAlert('Redirecting to add employee page');" 
-                style="background-color: rgb(0, 76, 255); color: white; text-decoration: none; padding: 5px 10px; border: 1px solid lime; border-radius: 5px; display: inline-block;">
-                Add Employee</a>
+        style="background-color: rgb(0, 76, 255); color: white; text-decoration: none; padding: 5px 10px; border: 1px solid lime; border-radius: 5px; display: inline-block;">
+        Add Employee
+    </a>
 </body>
 </html>
