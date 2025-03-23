@@ -1,8 +1,6 @@
 <?php
 include 'connection.php';
 
-$employee = null;
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     $employee = [
         'id' => $_POST['id'],
@@ -37,7 +35,7 @@ if (isset($_POST['update'])) {
         echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php';</script>";
         exit();
     }
-    
+
     $check_duplicate = $conn->query("SELECT id FROM employee WHERE first_name = '$first_name' AND last_name = '$last_name' AND department = '$department' AND salary = $salary AND id != $id");
 
     if ($check_duplicate->num_rows > 0) {
