@@ -48,63 +48,71 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="https://img.icons8.com/nolan/64/employee-card.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <title>Add Employee</title>
 </head>
-<body style="margin: 0; padding: 20px; min-height: 100vh; font-family: 'Poppins', sans-serif; color: #ffffff; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #0f0f0f;">
-    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden;">
-        <img src="blue.gif" alt="Blue Animation" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px);">
-    </div>
+<body style="margin: 0; padding: 20px; min-height: 100vh; font-family: Arial, sans-serif; color: #ffffff; text-align: center; background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);">
+    <img src="blue.gif" alt="Blue Animation" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.1; filter: blur(3px); z-index: -1;">
 
-    <div style="position: relative; z-index: 1; width: 100%; max-width: 500px; text-align: center;">
-        <h1 style="color: #00ff88; margin-bottom: 10px; font-size: 2.5em; font-weight: 700; letter-spacing: 2px;">ADD NEW EMPLOYEE</h1>
+    <h1 style="color: #00ff88; margin-bottom: 30px; font-size: 2.8em; font-weight: 800; letter-spacing: 2px; text-shadow: 0 0 20px rgba(0,255,136,0.3);">ADD NEW EMPLOYEE</h1>
 
-        <form id="addForm" method="POST" style="background: rgba(255, 255, 255, 0.03); padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0, 255, 136, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(0,255,136,0.1);">
-            <div style="margin-bottom: 25px; text-align: left;">
-                <label for="first_name" style="font-weight: 500; display: block; margin-bottom: 10px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">First Name</label>
-                <input type="text" id="first_name" name="first_name" required maxlength="50"
-                    style="width: 100%; padding: 15px; border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px; background: rgba(0, 255, 136, 0.05); color: white; outline: none; transition: all 0.3s ease; font-size: 1em; box-sizing: border-box;"
-                    onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'"
-                    onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'">
-            </div>
-
-            <div style="margin-bottom: 25px; text-align: left;">
-                <label for="last_name" style="font-weight: 500; display: block; margin-bottom: 10px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Last Name</label>
-                <input type="text" id="last_name" name="last_name" required maxlength="50"
-                    style="width: 100%; padding: 15px; border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px; background: rgba(0, 255, 136, 0.05); color: white; outline: none; transition: all 0.3s ease; font-size: 1em; box-sizing: border-box;"
-                    onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'"
-                    onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'">
-            </div>
-
-            <div style="margin-bottom: 25px; text-align: left;">
-                <label for="department" style="font-weight: 500; display: block; margin-bottom: 10px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Department</label>
-                <input type="text" id="department" name="department" required maxlength="50"
-                    style="width: 100%; padding: 15px; border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px; background: rgba(0, 255, 136, 0.05); color: white; outline: none; transition: all 0.3s ease; font-size: 1em; box-sizing: border-box;"
-                    onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'"
-                    onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'">
-            </div>
-
-            <div style="margin-bottom: 35px; text-align: left;">
-                <label for="salary" style="font-weight: 500; display: block; margin-bottom: 10px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1px;">Salary</label>
-                <input type="number" step="0.01" id="salary" name="salary" required min="1" max="1000000"
-                    style="width: 100%; padding: 15px; border: 1px solid rgba(0, 255, 136, 0.2); border-radius: 12px; background: rgba(0, 255, 136, 0.05); color: white; outline: none; transition: all 0.3s ease; font-size: 1em; box-sizing: border-box;"
-                    onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'"
-                    onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'">
-            </div>
-
-            <div style="display: flex; justify-content: space-between; gap: 15px;">
-                <button type="submit" 
-                    style="flex: 1; padding: 15px; background: #00ff88; color: #000; border: none; border-radius: 12px; cursor: pointer; font-weight: 600; font-size: 1em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;"
-                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,255,136,0.4)'"
-                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">Add Employee</button>
-                
-                <a href="index.php" 
-                    style="flex: 1; padding: 15px; background: transparent; color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; text-align: center; font-weight: 600; font-size: 1em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 1px;"
-                    onmouseover="this.style.backgroundColor='rgba(255,255,255,0.1)'"
-                    onmouseout="this.style.backgroundColor='transparent'">Cancel</a>
-            </div>
-        </form>
-    </div>
-    <p style="color: #888; margin-bottom: 40px; font-size: 1.1em;">Created by Eroscodex with Mias</p>
+    <form id="AddEmployee" method="POST">
+        <table style="width: 100%; max-width: 500px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,255,136,0.1); backdrop-filter: blur(20px); border: 1px solid rgba(0,255,136,0.1);">
+            <tr>
+                <td style="padding-bottom: 25px;">
+                    <label for="first_name" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">First Name</label>
+                    <input type="text" id="first_name" name="first_name" required maxlength="50"
+                        style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
+                        onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
+                        onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 25px;">
+                    <label for="last_name" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Last Name</label>
+                    <input type="text" id="last_name" name="last_name" required maxlength="50"
+                        style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
+                        onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
+                        onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 25px;">
+                    <label for="department" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Department</label>
+                    <input type="text" id="department" name="department" required maxlength="50"
+                        style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
+                        onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
+                        onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
+                </td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: 35px;">
+                    <label for="salary" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Salary</label>
+                    <input type="number" step="0.01" id="salary" name="salary" required min="1" max="1000000"
+                        style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
+                        onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
+                        onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'"
+                        oninput="this.value = this.value.match(/^\d*\.?\d{0,2}$/)"
+                        placeholder="Enter amount (e.g. 100000.00)">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="display: flex; justify-content: space-between; gap: 20px;">
+                        <button type="submit" 
+                            style="flex: 1; padding: 16px 30px; background: #00ff88; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); display: flex; align-items: center; justify-content: center; gap: 8px;"
+                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,255,136,0.4)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,255,136,0.2)'">
+                            + ADD EMPLOYEE
+                        </button>
+                        <a href="index.php" 
+                            style="flex: 1; padding: 16px 30px; background: transparent; color: #fff; text-decoration: none; border: 1.5px solid rgba(255,255,255,0.2); border-radius: 50px; text-align: center; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; justify-content: center;"
+                            onmouseover="this.style.backgroundColor='rgba(255,255,255,0.1)'; this.style.borderColor='rgba(255,255,255,0.4)'"
+                            onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='rgba(255,255,255,0.2)'">CANCEL</a>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex with Mias</p>
 </body>
 </html>
