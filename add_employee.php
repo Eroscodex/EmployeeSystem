@@ -27,9 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $check_duplicate = $conn->query("SELECT id FROM employee WHERE first_name = '$first_name' AND last_name = '$last_name' AND department = '$department' AND salary = $salary");
+    $check_duplicate = $conn->query("SELECT id FROM employee WHERE LOWER(first_name) = LOWER('$first_name') AND LOWER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
     if ($check_duplicate->num_rows > 0) {
-        echo "<script>alert('An employee with these exact details already exists'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php';</script>";
+        exit();
+    }
+
+    if (strtolower($first_name) === strtolower($last_name)) {
+        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php';</script>";
         exit();
     }
 
