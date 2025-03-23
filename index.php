@@ -1,9 +1,7 @@
 <?php
-session_start();
 include 'connection.php';
 
-$sql = "SELECT * FROM employee";
-$result = $conn->query($sql);
+$result = $conn->query("SELECT * FROM employee");
 ?>
 
 <!DOCTYPE html>
@@ -12,14 +10,16 @@ $result = $conn->query($sql);
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <link rel="icon" type="image/png" href="https://img.icons8.com/nolan/64/employee-card.png">
-    <title>Employee Management</title>
+    <title>Employee Management System</title>
 </head>
 <body style='margin: 0; padding: 20px; min-height: 100vh; font-family: Arial, sans-serif; color: #ffffff; text-align: center; background: #0f0f0f;'>
     <img src="J4o.gif" alt="Background Animation" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.15; filter: blur(2px); z-index: -1;">
 
-    <h1 style='color: #00ff88; margin-bottom: 10px; font-size: 2.5em; font-weight: 700; letter-spacing: 2px;'>EMPLOYEE MANAGEMENT SYSTEM</h1>
+    <h1 style='color: #00ff88; margin-bottom: 10px; font-size: 2.5em; font-weight: 700; letter-spacing: 2px;'>EMPLOYEE MANAGEMENT SYSTEM</h1><br>
+    <h2 style='color: #00ff88; margin-bottom: 10px; font-size: 2.5em; font-weight: 700; letter-spacing: 2px;'>Employee List</h2><br>
 
-    <a href="add_employee.php" 
+    <a href="add_employee.php"
+        onclick="return confirm('Are you sure you want to add a new employee?');" 
         style="padding: 16px 30px; background: #00ff88; color: #000; text-decoration: none; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 20px;"
         onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,255,136,0.4)'"
         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,255,136,0.2)'">
@@ -45,7 +45,7 @@ $result = $conn->query($sql);
                     <td style='padding: 20px; color: #fff;'><?php echo $row['first_name']; ?></td>
                     <td style='padding: 20px; color: #fff;'><?php echo $row['last_name']; ?></td>
                     <td style='padding: 20px; color: #fff;'><?php echo $row['department']; ?></td>
-                    <td style='padding: 20px; color: #fff;'><?php echo number_format($row['salary'], 2, '.', ','); ?></td>
+                    <td style='padding: 20px; color: #fff;'>₱<?php echo number_format($row['salary'], 2, '.', ','); ?></td>
                     <td style='padding: 20px; text-align: center;'>
                         <form method='GET' action='edit_employee.php' style='display: inline; margin-right: 10px;'>
                             <input type='hidden' name='id' value='<?php echo $row['id']; ?>'>

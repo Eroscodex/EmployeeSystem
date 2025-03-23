@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Last name is required'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
-    if ($department == "BS") {
-        echo "<script>alert('Department is required BS'); window.location='edit_employee.php?id=$id';</script>";
+    if ($department == "") {
+        echo "<script>alert('Department is required'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
     if ($salary <= 40000 || $salary > 1000000) {
@@ -73,28 +73,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <h1 style="color: #00ff88; margin-bottom: 30px; font-size: 2.8em; font-weight: 800; letter-spacing: 2px; text-shadow: 0 0 20px rgba(0,255,136,0.3);">EDIT EMPLOYEE</h1>
 
     <form id="EditEmployee" method="POST" style="width: 100%; max-width: 500px; margin: 0 auto; background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 24px; box-shadow: 0 8px 32px rgba(0,255,136,0.1); backdrop-filter: blur(20px); border: 1px solid rgba(0,255,136,0.1);">
-        <input type="hidden" name="id" value="<?php echo $_GET['id']; ?>">
+        <input type="hidden" name="id" value="<?php echo $employee['id']; ?>">
 
         <label for="first_name" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">First Name</label>
-        <input type="text" id="first_name" name="first_name" value="<?php echo $_GET['first_name']; ?>" required maxlength="50"
+        <input type="text" id="first_name" name="first_name" value="<?php echo $employee['first_name']; ?>" required maxlength="50"
             style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; margin-bottom: 25px; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
             onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
             onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
 
         <label for="last_name" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Last Name</label>
-        <input type="text" id="last_name" name="last_name" value="<?php echo $_GET['last_name']; ?>" required maxlength="50"
+        <input type="text" id="last_name" name="last_name" value="<?php echo $employee['last_name']; ?>" required maxlength="50"
             style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; margin-bottom: 25px; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
             onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
             onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
 
         <label for="department" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Department</label>
-        <input type="text" id="department" name="department" value="<?php echo $_GET['department']; ?>" required maxlength="50"
+        <input type="text" id="department" name="department" value="<?php echo $employee['department']; ?>" required maxlength="50"
             style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; margin-bottom: 25px; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
             onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
             onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'">
 
         <label for="salary" style="font-weight: 600; display: block; margin-bottom: 12px; color: #00ff88; font-size: 0.9em; text-transform: uppercase; letter-spacing: 1.5px;">Salary</label>
-        <input type="number" step="0.01" id="salary" name="salary" value="<?php echo number_format($_GET['salary'], 2, '.', ''); ?>" required min="1" max="1000000"
+        <input type="number" step="0.01" id="salary" name="salary" value="<?php echo number_format($employee['salary'], 2, '.', ''); ?>" required min="1" max="1000000"
             style="width: 100%; padding: 16px; border: 2px solid rgba(0, 255, 136, 0.2); border-radius: 16px; background: rgba(0, 255, 136, 0.03); color: white; outline: none; transition: all 0.3s ease; font-size: 1.1em; box-sizing: border-box; margin-bottom: 35px; box-shadow: inset 0 0 10px rgba(0,255,136,0.05);"
             onmouseover="this.style.borderColor='rgba(0, 255, 136, 0.5)'; this.style.boxShadow='inset 0 0 15px rgba(0,255,136,0.1)'"
             onmouseout="this.style.borderColor='rgba(0, 255, 136, 0.2)'; this.style.boxShadow='inset 0 0 10px rgba(0,255,136,0.05)'"
@@ -102,7 +102,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             placeholder="Enter amount (e.g. 100000.00)">
 
         <div style="display: flex; justify-content: space-between; gap: 20px;">
-            <button type="submit" name="update" 
+            <button type="submit" name="update"
+                onclick="return confirm('Are you sure you want to update this employee?');" 
                 style="flex: 1; padding: 16px 30px; background: #00ff88; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); display: flex; align-items: center; justify-content: center; gap: 8px;"
                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,255,136,0.4)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,255,136,0.2)'">

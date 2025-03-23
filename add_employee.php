@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Department is required'); window.location='add_employee.php';</script>";
         exit();
     }
-    if ($salary <= 0 || $salary > 1000000) {
+    if ($salary <= 40000 || $salary > 1000000) {
         echo "<script>alert('Salary must be between 1 and 1,000,000'); window.location='add_employee.php';</script>";
         exit();
     }
@@ -98,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <tr>
                 <td>
                     <div style="display: flex; justify-content: space-between; gap: 20px;">
-                        <button type="submit" 
+                        <button type="submit"
+                            onclick="return confirm('Are you sure you want to add this new employee?');"
                             style="flex: 1; padding: 16px 30px; background: #00ff88; color: #000; border: none; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 0.95em; transition: all 0.3s ease; text-transform: uppercase; letter-spacing: 2px; box-shadow: 0 4px 15px rgba(0,255,136,0.2); display: flex; align-items: center; justify-content: center; gap: 8px;"
                             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,255,136,0.4)'"
                             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,255,136,0.2)'">
