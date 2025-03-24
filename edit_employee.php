@@ -1,14 +1,20 @@
 <?php
 include 'connection.php';
 
+$employee = [
+    'id' => '',
+    'first_name' => '',
+    'last_name' => '',
+    'department' => '',
+    'salary' => ''
+];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    $employee = [
-        'id' => $_POST['id'],
-        'first_name' => $_POST['first_name'],
-        'last_name' => $_POST['last_name'],
-        'department' => $_POST['department'],
-        'salary' => $_POST['salary']
-    ];
+    $employee['id'] = $_POST['id'];
+    $employee['first_name'] = $_POST['first_name'];
+    $employee['last_name'] = $_POST['last_name'];
+    $employee['department'] = $_POST['department'];
+    $employee['salary'] = $_POST['salary'];
 } else {
     echo "<script>alert('Invalid access!'); window.location='index.php';</script>";
     exit();
@@ -22,28 +28,28 @@ if (isset($_POST['update'])) {
     $salary = $_POST['salary'];
 
     if (empty($first_name) || strlen($first_name) < 2 || strlen($first_name) > 50) {
-        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 
     if (empty($last_name) || strlen($last_name) < 2 || strlen($last_name) > 50) {
-        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 
     if (empty($department) || strlen($department) < 4 || strlen($department) > 50) {
-        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 
-    $check_duplicate = $conn->query("SELECT id FROM employee WHERE LOWER(first_name) = LOWER('$first_name') AND LOWER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
+    $check_duplicate = $conn->query("SELECT id FROM employee WHERE UPPER(first_name) = LOWER('$first_name') AND UPPER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
     if ($check_duplicate->num_rows > 0) {
-        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Duplicate employee details found'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 
     if (strtolower($first_name) === strtolower($last_name)) {
-        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php';</script>";
+        echo "<script>alert('First name and last name cannot be the same'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 
@@ -53,7 +59,7 @@ if (isset($_POST['update'])) {
         echo "<script>alert('Employee updated successfully!'); window.location='index.php';</script>";
         exit();
     } else {
-        echo "<script>alert('Error updating employee'); window.location='edit_employee.php';</script>";
+        echo "<script>alert('Error updating employee'); window.location='edit_employee.php?id=$id';</script>";
         exit();
     }
 }

@@ -1,6 +1,11 @@
 <?php
 include 'connection.php';
 
+$first_name = '';
+$last_name = '';
+$department = '';
+$salary = '';
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -8,33 +13,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $salary = $_POST['salary'];
 
     if (empty($first_name) || strlen($first_name) < 2 || strlen($first_name) > 50) {
-        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
     if (empty($last_name) || strlen($last_name) < 2 || strlen($last_name) > 50) {
-        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
     if (empty($department) || strlen($department) < 4 || strlen($department) > 50) {
-        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
     if ($salary <= 6000 || $salary < 50000 || $salary > 1000000) {
-        echo "<script>alert('Salary must be between 40,000 and 1,000,000'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Salary must be between 40,000 and 1,000,000'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
     $check_duplicate = $conn->query("SELECT id FROM employee WHERE LOWER(first_name) = LOWER('$first_name') AND LOWER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
     if ($check_duplicate->num_rows > 0) {
-        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
     if (strtolower($first_name) === strtolower($last_name)) {
-        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php';</script>";
+        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 
@@ -44,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Employee added successfully!'); window.location='index.php';</script>";
         exit();
     } else {
-        echo "<script>alert('Error adding employee'); window.location='add_employee.php';</script>";
+        echo "<script>alert('Error adding employee'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
         exit();
     }
 }
