@@ -1,50 +1,61 @@
 <?php
 include 'connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
-    $id = intval($_GET['id']);
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
+    $employee = [
+        'id' => $_POST['id'],
+        'first_name' => $_POST['first_name'],
+        'last_name' => $_POST['last_name'],
+        'department' => $_POST['department'],
+        'salary' => $_POST['salary']
+    ];
+} else {
+    echo "<script>alert('Invalid access!'); window.location='index.php';</script>";
+    exit();
+}
 
-    $result = $conn->query("SELECT * FROM employee WHERE id = $id");
-    $employee = $result->fetch_assoc();
+if (isset($_POST['update'])) {  
+    $id = $_POST['id'];
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $department = $_POST['department'];
+    $salary = $_POST['salary'];
 
-    if (!$employee) {
-        echo "<script>alert('Error: Employee not found.'); location.href='index.php';</script>";
+    if (empty($first_name) || strlen($first_name) < 2 || strlen($first_name) > 50) {
+        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
         exit();
     }
-}   elseif ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    $id = intval($_POST['id']);
 
-    $first_name = mysqli_real_escape_string($conn, $_POST['first_name']);
-    $last_name = mysqli_real_escape_string($conn, $_POST['last_name']);
-    $department = mysqli_real_escape_string($conn, $_POST['department']);
-    $salary = floatval($_POST['salary']);
+    if (empty($last_name) || strlen($last_name) < 2 || strlen($last_name) > 50) {
+        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+        exit();
+    }
 
-    
-    $check_sql = "SELECT id FROM employee WHERE first_name = '$first_name' AND last_name = '$last_name' AND department = '$department' AND id != $id";
-    $check_result = $conn->query($check_sql);
+    if (empty($department) || strlen($department) < 4 || strlen($department) > 50) {
+        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php';</script>";
+        exit();
+    }
 
-    if ($check_result->num_rows > 0) {
-        echo "<script>alert('Error: Employee with the same details already exists.'); location.href='edit_employee.php?id=$id';</script>";
+    $check_duplicate = $conn->query("SELECT id FROM employee WHERE UPPER(first_name) = LOWER('$first_name') AND UPPER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
+    if ($check_duplicate->num_rows > 0) {
+        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php';</script>";
+        exit();
+    }
+
+    if (strtolower($first_name) === strtolower($last_name)) {
+        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php';</script>";
+        exit();
+    }
+
+    $update = $conn->query("UPDATE employee SET first_name='$first_name', last_name='$last_name', department='$department', salary=$salary WHERE id=$id");
+
+    if ($update) {
+        echo "<script>alert('Employee updated successfully!'); window.location='index.php';</script>";
         exit();
     } else {
-        
-        $update_sql = "UPDATE employee SET 
-                        first_name='$first_name', 
-                        last_name='$last_name', 
-                        department='$department', 
-                        salary=$salary 
-                        WHERE id=$id";
-
-        if ($conn->query($update_sql)) {
-            echo "<script>alert('Employee updated successfully!'); location.href='index.php';</script>";
-            exit();
-        } else {
-            echo "Error updating record: " . $conn->error;
-        }
+        echo "<script>alert('Error updating employee'); window.location='edit_employee.php';</script>";
+        exit();
     }
-} else {
-    echo "<script>alert('No employee ID provided.'); location.href='index.php';</script>";
-    exit();
 }
 ?>
 
@@ -53,38 +64,142 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/png" href="https://img.icons8.com/nolan/64/employee-card.png">
     <title>Edit Employee</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+        img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.1;
+            filter: blur(3px);
+            z-index: -1;
+        }
+        h1 {
+            color: #00ff88;
+            margin-bottom: 30px;
+            font-size: 2.8em;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0,255,136,0.3);
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0,255,136,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0,255,136,0.1);
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 12px;
+            color: #00ff88;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid rgba(0, 255, 136, 0.2);
+            border-radius: 16px;
+            background: rgba(0, 255, 136, 0.03);
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+            font-size: 1.1em;
+            box-sizing: border-box;
+            margin-bottom: 25px;
+            box-shadow: inset 0 0 10px rgba(0,255,136,0.05);
+        }
+        input[type="text"]:hover, input[type="number"]:hover {
+            border-color: rgba(0, 255, 136, 0.5);
+            box-shadow: inset 0 0 15px rgba(0,255,136,0.1);
+        }
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: rgba(0, 255, 136, 0.5);
+            box-shadow: inset 0 0 15px rgba(0,255,136,0.1);
+        }
+        button {
+            flex: 1;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .save-button {
+            background: #00ff88;
+            color: #000;
+            box-shadow: 0 4px 15px rgba(0,255,136,0.2);
+        }
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,255,136,0.3);
+        }
+        .cancel-button {
+            background: #ff0066;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255,0,102,0.2);
+        }
+        .cancel-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,0,102,0.3);
+        }
+    </style>
 </head>
-<body style="background: url('J4o.gif') center center / cover no-repeat; font-family: Arial, sans-serif; color: whitesmoke; display: flex; flex-direction: column; align-items: center; height: 100vh; justify-content: center;">
+<body>
+    <img src="matrix.gif" alt="Background Animation">
+    <h1>EDIT EMPLOYEE</h1>
+    <form id="EditEmployee" method="POST">
+        <input type="hidden" name="id" value="<?php echo $employee['id']; ?>">
+        <input type="hidden" name="update" value="1">
 
-    <h2 style="color: white; margin-bottom: 20px;">Edit Employee</h2>
+        <label for="first_name">First Name</label>
+        <input type="text" id="first_name" name="first_name" value="<?php echo $employee['first_name']; ?>" required minlength="2" maxlength="50" placeholder="Enter a first name">
 
-    <form method="POST" style="background: rgba(0, 0, 0, 0.51); padding: 20px; border-radius: 10px; box-shadow: 1px 4px 20px lime; max-width: 300px; width: 100%;">
-        
-        <input type="hidden" name="id" value="<?php echo isset($employee['id']) ? htmlspecialchars($employee['id']) : ''; ?>">
+        <label for="last_name">Last Name</label>
+        <input type="text" id="last_name" name="last_name" value="<?php echo $employee['last_name']; ?>" required minlength="2" maxlength="50" placeholder="Enter a last name">
 
-        <label for="first_name" style="font-weight: bold; display: block; margin-bottom: 5px;">First Name:</label>
-        <input type="text" name="first_name" value="<?php echo isset($employee['first_name']) ? htmlspecialchars($employee['first_name']) : ''; ?>" required 
-            style="width: 95%; padding: 10px; margin-bottom: 15px; border: 1px solid lime; border-radius: 5px;">
+        <label for="department">Department</label>
+        <input type="text" id="department" name="department" value="<?php echo $employee['department']; ?>" required minlength="4" maxlength="50" placeholder="Enter a department">
 
-        <label for="last_name" style="font-weight: bold; display: block; margin-bottom: 5px;">Last Name:</label>
-        <input type="text" name="last_name" value="<?php echo isset($employee['last_name']) ? htmlspecialchars($employee['last_name']) : ''; ?>" required 
-            style="width: 95%; padding: 10px; margin-bottom: 15px; border: 1px solid lime; border-radius: 5px;">
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" name="salary" value="<?php echo $employee['salary']; ?>" required min="50000" max="1000000 placeholder="Enter amount (e.g. ₱100,000.00)">
 
-        <label for="department" style="font-weight: bold; display: block; margin-bottom: 5px;">Department:</label>
-        <input type="text" name="department" value="<?php echo isset($employee['department']) ? htmlspecialchars($employee['department']) : ''; ?>" required 
-            style="width: 95%; padding: 10px; margin-bottom: 15px; border: 1px solid lime; border-radius: 5px;">
-
-        <label for="salary" style="font-weight: bold; display: block; margin-bottom: 5px;">Salary:</label>
-        <input type="number" step="0.01" name="salary" value="<?php echo isset($employee['salary']) ? htmlspecialchars($employee['salary']) : ''; ?>" required 
-            style="width: 95%; padding: 10px; margin-bottom: 15px; border: 1px solid lime; border-radius: 5px;">
-
-        <input type="submit" name="update" value="Update Employee" 
-            style="padding: 10px 20px; background-color:rgb(22, 137, 1); color: whitesmoke; border: 1px solid lime; border-radius: 5px; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; gap: 20px;">
+            <button type="submit" name="update" class="save-button" onclick="return confirm('Are you sure you want to update this employee?');">
+                <i class="fa fa-save"></i> Save Changes
+            </button>
+            <button type="button" onclick="window.location='index.php';" class="cancel-button">
+                <i class="fa fa-times"></i> Cancel
+            </button>
+        </div>
     </form>
-
-    <a href="index.php" style="background-color:rgb(0, 76, 255); color: white; text-decoration: none; padding: 5px 10px; border: 1px solid lime; border-radius: 5px; margin-top: 20px; display: inline-block;">Back to List</a>
-
 </body>
 </html>
