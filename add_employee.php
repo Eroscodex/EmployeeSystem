@@ -1,6 +1,7 @@
 <?php
 include 'connection.php';
 
+<<<<<<< HEAD
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
@@ -9,20 +10,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (empty($first_name) || strlen($first_name) < 2 || strlen($first_name) > 50) {
         echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+=======
+$first_name = '';
+$last_name = '';
+$department = '';
+$salary = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $department = $_POST['department'];
+    $salary = $_POST['salary'];
+
+    if (empty($first_name) || strlen($first_name) < 2 || strlen($first_name) > 50) {
+        echo "<script>alert('First name must be between 2 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 
     if (empty($last_name) || strlen($last_name) < 2 || strlen($last_name) > 50) {
+<<<<<<< HEAD
         echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php';</script>";
+=======
+        echo "<script>alert('Last name must be between 2 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 
     if (empty($department) || strlen($department) < 4 || strlen($department) > 50) {
+<<<<<<< HEAD
         echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php';</script>";
+=======
+        echo "<script>alert('Department must be between 4 and 50 characters'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 
     if ($salary <= 6000 || $salary < 50000 || $salary > 1000000) {
+<<<<<<< HEAD
         echo "<script>alert('Salary must be between 40,000 and 1,000,000'); window.location='add_employee.php';</script>";
         exit();
     }
@@ -30,11 +55,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_duplicate = $conn->query("SELECT id FROM employee WHERE UPPER(first_name) = LOWER('$first_name') AND UPPER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
     if ($check_duplicate->num_rows > 0) {
         echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php';</script>";
+=======
+        echo "<script>alert('Salary must be between 40,000 and 1,000,000'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+        exit();
+    }
+
+    $check_duplicate = $conn->query("SELECT id FROM employee WHERE LOWER(first_name) = LOWER('$first_name') AND LOWER(last_name) = LOWER('$last_name') AND department = '$department' AND salary = $salary");
+    if ($check_duplicate->num_rows > 0) {
+        echo "<script>alert('Duplicate employee details found'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 
     if (strtolower($first_name) === strtolower($last_name)) {
+<<<<<<< HEAD
         echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php';</script>";
+=======
+        echo "<script>alert('First name and last name cannot be the same'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 
@@ -44,7 +82,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Employee added successfully!'); window.location='index.php';</script>";
         exit();
     } else {
+<<<<<<< HEAD
         echo "<script>alert('Error adding employee'); window.location='add_employee.php';</script>";
+=======
+        echo "<script>alert('Error adding employee'); window.location='add_employee.php?first_name=$first_name&last_name=$last_name&department=$department&salary=$salary';</script>";
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
         exit();
     }
 }
@@ -198,6 +240,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </tr>
         </table>
     </form>
+<<<<<<< HEAD
     <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex</p>
+=======
+    <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex with Mias</p>
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
 </body>
 </html>

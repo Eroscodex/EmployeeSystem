@@ -183,6 +183,10 @@ $result = $conn->query("SELECT * FROM employee");
             <?php } ?>
         </tbody>
     </table>
+<<<<<<< HEAD
     <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex</p>
+=======
+    <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex with Mias</p>
+>>>>>>> b87750865e48a9c43c8aa5cb9d4416a4b4b6d2d0
 </body>
 </html>
