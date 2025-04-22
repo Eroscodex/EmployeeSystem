@@ -198,6 +198,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </tr>
         </table>
     </form>
-    <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex with Mias</p>
+    <p style="color: #888; margin-top: 40px; font-size: 1.1em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Created by Eroscodex</p>
 </body>
 </html>

@@ -16,7 +16,7 @@
     );
 
     if($conn){
-        echo "Created by Karl Nicko L. Alondra and Dave De Leon Mias BSIT - A";
+        echo "Created by Karl Nicko L. Alondra";
     }
     else{
         echo "Connection failed";
